@@ -1,0 +1,196 @@
+<!--顶部-->
+{include file="common/head"/}
+<link rel="stylesheet" href="__CSS__/other.css">
+<div class="other-content">
+    <div class="layui-tab layui-tab-brief">
+        <ul class="layui-tab-title">
+            <li class="layui-this">机构配置</li>
+            <li>利率配置</li>
+            <li>贷款期数</li>
+            <!--<li>商品管理</li>-->
+            <!--<li>订单管理</li>-->
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <button class="layui-btn layui-btn-normal" id="add_Area">添加机构</button>
+                <table class="layui-table" id="list" lay-filter="list"></table>
+                <button type="button" class="layui-btn layui-btn-danger" id="delAll_Area">批量删除</button>
+            </div>
+            <div class="layui-tab-item">
+                <button class="layui-btn layui-btn-normal" id="add_Interest">添加利率</button>
+                <table class="layui-table" id="list2" lay-filter="list2"></table>
+                <button type="button" class="layui-btn layui-btn-danger" id="delAll_Interest">批量删除</button>
+            </div>
+            <div class="layui-tab-item">
+                <button class="layui-btn layui-btn-normal" id="add_Periods">添加期数</button>
+                <table class="layui-table" id="list3" lay-filter="list2"></table>
+                <button type="button" class="layui-btn layui-btn-danger" id="delAll_Periods">批量删除</button>
+            </div>
+            <div class="layui-tab-item">内容4</div>
+            <div class="layui-tab-item">内容5</div>
+        </div>
+    </div>
+
+
+</div>
+<!--底部-->
+{include file="common/footer"/}
+<script>
+    //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+    layui.use(['element','form','table'], function(){
+        var element = layui.element,form = layui.form,table = layui.table,$ = layui.jquery;
+
+        var tableIn = table.render({
+            id: 'user',
+            elem: '#list',
+            url: '{:url("getArea")}',
+            method: 'post',
+            page: true,
+            cols: [[
+                {checkbox:true,fixed: true},
+                {field: 'id', title: 'id', width: 50, fixed: true},
+                {field: 'name', title: '机构', width: 120},
+                {field: 'created_at', title: '创建时间', width: 160},
+                {field: 'updated_at', title: '更新时间', width: 160},
+            ]],
+            limit: 10 //每页默认显示的数量
+        });
+        //添加地区机构
+        $('#add_Area').on('click',function () {
+            layer.prompt({title: '添加新机构', formType: 3}, function(text, index){
+                $.post("{:url('addArea')}", {name:text}, function (res) {
+                    if (res.code === 1) {
+                        layer.msg(res.msg, {time: 1000, icon: 1},function () {
+                            layer.close(index);
+                            tableIn.reload();
+                        });
+                    } else {
+                        layer.msg('添加失败！', {time: 1000, icon: 2});
+                    }
+                });
+            });
+        });
+        $('#delAll_Area').click(function(){
+            layer.confirm('确认要删除选中信息吗？', {icon: 3}, function(index) {
+                layer.close(index);
+                var checkStatus = table.checkStatus('post'); //test即为参数id设定的值
+                var ids = [];
+                $(checkStatus.data).each(function (i, o) {
+                    ids.push(o.id);
+                });
+                var loading = layer.load(1, {shade: [0.1, '#fff']});
+                $.post("{:url('deleteAll')}", {ids: ids}, function (data) {
+                    layer.close(loading);
+                    if (data.code === 1) {
+                        layer.msg(data.msg, {time: 1000, icon: 1});
+                        tableIn.reload();
+                    } else {
+                        layer.msg(data.msg, {time: 1000, icon: 2});
+                    }
+                });
+            });
+        })
+
+        var tableIn2 = table.render({
+            id: 'interest',
+            elem: '#list2',
+            url: '{:url("getInterest")}',
+            method: 'post',
+            page: true,
+            cols: [[
+                {checkbox:true,fixed: true},
+                {field: 'id', title: 'id', width: 50, fixed: true},
+                {field: 'interest', title: '利率', width: 120},
+                {field: 'create_t', title: '创建时间', width: 160},
+            ]],
+            limit: 10 //每页默认显示的数量
+        });
+        //添加利率
+        $('#add_Interest').on('click',function () {
+            layer.prompt({title: '添加新利率', formType: 3}, function(text, index){
+                $.post("{:url('addInterest')}", {interest:text}, function (res) {
+                    if (res.code === 1) {
+                        layer.msg(res.msg, {time: 1000, icon: 1},function () {
+                            layer.close(index);
+                            tableIn2.reload();
+                        });
+                    } else {
+                        layer.msg('添加失败！', {time: 1000, icon: 2});
+                    }
+                });
+            });
+        });
+        $('#delAll_Interest').click(function(){
+            layer.confirm('确认要删除选中信息吗？', {icon: 3}, function(index) {
+                layer.close(index);
+                var checkStatus = table.checkStatus('interest'); //test即为参数id设定的值
+                var ids = [];
+                $(checkStatus.data).each(function (i, o) {
+                    ids.push(o.id);
+                });
+                var loading = layer.load(1, {shade: [0.1, '#fff']});
+                $.post("{:url('deleteInterestAll')}", {ids: ids}, function (data) {
+                    layer.close(loading);
+                    if (data.code === 1) {
+                        layer.msg(data.msg, {time: 1000, icon: 1});
+                        tableIn2.reload();
+                    } else {
+                        layer.msg(data.msg, {time: 1000, icon: 2});
+                    }
+                });
+            });
+        })
+
+        var tableIn3 = table.render({
+            id: 'periods',
+            elem: '#list3',
+            url: '{:url("getPeriods")}',
+            method: 'post',
+            page: true,
+            cols: [[
+                {checkbox:true,fixed: true},
+                {field: 'id', title: 'id', width: 50, fixed: true},
+                {field: 'number', title: '期数', width: 120},
+                {field: 'created_at', title: '创建时间', width: 160},
+                {field: 'updated_at', title: '更新时间', width: 160},
+            ]],
+            limit: 10 //每页默认显示的数量
+        });
+        //添加贷款期数
+        $('#add_Periods').on('click',function () {
+            layer.prompt({title: '添加新期数', formType: 3}, function(text, index){
+                $.post("{:url('addPeriods')}", {number:text}, function (res) {
+                    if (res.code === 1) {
+                        layer.msg(res.msg, {time: 1000, icon: 1},function () {
+                            layer.close(index);
+                            tableIn3.reload();
+                        });
+                    } else {
+                        layer.msg('添加失败！', {time: 1000, icon: 2});
+                    }
+                });
+            });
+        });
+        $('#delAll_Periods').click(function(){
+            layer.confirm('确认要删除选中信息吗？', {icon: 3}, function(index) {
+                layer.close(index);
+                var checkStatus = table.checkStatus('periods'); //test即为参数id设定的值
+                var ids = [];
+                $(checkStatus.data).each(function (i, o) {
+                    ids.push(o.id);
+                });
+                var loading = layer.load(1, {shade: [0.1, '#fff']});
+                $.post("{:url('deletePeriodsAll')}", {ids: ids}, function (data) {
+                    layer.close(loading);
+                    if (data.code === 1) {
+                        layer.msg(data.msg, {time: 1000, icon: 1});
+                        tableIn2.reload();
+                    } else {
+                        layer.msg(data.msg, {time: 1000, icon: 2});
+                    }
+                });
+            });
+        })
+
+    });
+</script>

@@ -1,0 +1,174 @@
+{include file="common/head"/}
+<link rel="stylesheet" href="__STATIC__/layui/css/modules/layer/default/layer.css" media="all">
+<style>
+    .cateImage dd {
+        position: relative;
+        margin: 0 10px 10px 0;
+        float: left
+    }
+    .cateImage .operate {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 1
+    }
+    .cateImage .operate i {
+        cursor: pointer;
+        background: #2F4056;
+        padding: 2px;
+        line-height: 15px;
+        text-align: center;
+        color: #fff;
+        margin-left: 1px;
+        float: left;
+        filter: alpha(opacity=80);
+        -moz-opacity: .8;
+        -khtml-opacity: .8;
+        position: absolute;
+        top:0;
+        right:0;
+        opacity: .8
+    }
+</style>
+<div class="admin-main fadeInUp animated">
+    <form class="layui-form layui-form-pane" method="post" >
+        <div class="layui-form-item">
+            <label class="layui-form-label">融资合同</label>
+            <div class="layui-input-block">
+                <div class="layui-upload">
+                    <div class="layui-upload-list cateImage" id="cateImage1">
+                        {foreach name="images['rongzi']" item='vo' key="k"}
+                        {notempty name="vo"}
+                        <dd class="item_img" id="rongzi_{$k}">
+                            <img style="width:250px;height: 180px;" layer-src="{$vo}" src="{$vo}">
+                        </dd>
+                        {/notempty}
+                        {/foreach}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">手持融资合同照片</label>
+            <div class="layui-input-block">
+                <div class="layui-upload">
+                    <div class="layui-upload-list cateImage" id="cateImage2">
+                        {foreach name="images['shouchirongzi']" item='vo' key="k"}
+                        {notempty name="vo"}
+                        <dd class="item_img" id="shouchirongzi_{$k}">
+                            <img style="width:250px;height: 180px;" layer-src="{$vo}" src="{$vo}">
+                        </dd>
+                        {/notempty}
+                        {/foreach}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">收据</label>
+            <div class="layui-input-block">
+                <div class="layui-upload">
+                    <div class="layui-upload-list cateImage" id="cateImage3">
+                        {foreach name="images['shouju']" item='vo' key="k"}
+                        {notempty name="vo"}
+                        <dd class="item_img" id="shouju{$k}">
+                            <img style="width:250px;height: 180px;" layer-src="{$vo}" src="{$vo}">
+                        </dd>
+                        {/notempty}
+                        {/foreach}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">租车合同</label>
+            <div class="layui-input-block">
+                <div class="layui-upload">
+                    <div class="layui-upload-list cateImage" id="cateImage4">
+                        {foreach name="images['zuchehetong']" item='vo' key="k"}
+                        {notempty name="vo"}
+                        <dd class="item_img" id="zuchehetong{$k}">
+                            <img style="width:250px;height: 180px;" layer-src="{$vo}" src="{$vo}">
+                        </dd>
+                        {/notempty}
+                        {/foreach}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">汽车销售合同</label>
+            <div class="layui-input-block">
+                <div class="layui-upload">
+                    <div class="layui-upload-list cateImage" id="cateImage5">
+                        {foreach name="images['qichexiaoshou']" item='vo' key="k"}
+                        {notempty name="vo"}
+                        <dd class="item_img" id="qichexiaoshou{$k}">
+                            <img style="width:250px;height: 180px;" layer-src="{$vo}" src="{$vo}">
+                        </dd>
+                        {/notempty}
+                        {/foreach}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">其他</label>
+            <div class="layui-input-block">
+                <div class="layui-upload">
+                    <div class="layui-upload-list cateImage" id="cateImage6">
+                        {foreach name="images['qita']" item='vo' key="k"}
+                        {notempty name="vo"}
+                        <dd class="item_img" id="qita{$k}">
+                            <img style="width:250px;height: 180px;" layer-src="{$vo}" src="{$vo}">
+                        </dd>
+                        {/notempty}
+                        {/foreach}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <input type="hidden" id="loa_id" value="{$id}">
+                <a href="{:url('updateStatue')}?id={$id}&status=6" class="layui-btn" >通过</a>
+                <a class="layui-btn layui-btn-danger" lay-submit="" lay-filter="status">拒绝</a>
+            </div>
+        </div>
+    </form>
+</div>
+{include file="common/footer"/}
+<script src="__JS__/jquery.2.1.1.min.js" ></script>
+<script src="__STATIC__/select2/select2.full.js"></script>
+<script src="__STATIC__/layui/lay/modules/layer.js"></script>
+<script>
+
+    layui.use(['form','upload','layer','laydate'], function () {
+        var form = layui.form,upload = layui.upload,layer = layui.layer,laydate = layui.laydate,$ = layui.jquery;
+
+
+        $('.cateImage').click(function(){
+            layer.photos({
+                photos: '.cateImage'
+                ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+            });
+        });
+
+        //添加拒绝理由
+        form.on('submit(status)', function(data){
+            layer.prompt({
+                formType: 2
+                ,title: '请添加拒绝理由'
+                ,value: ''
+            }, function(value,index){
+                var id = $('#loa_id').val();
+                $.post("{:url('updateStatue')}",{id:id,remark:value,status:3},function (data) {
+                    layer.close(index);
+                    location.href = 'examine';
+                });
+            });
+        });
+
+    });
+
+</script>

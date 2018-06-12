@@ -1,0 +1,51 @@
+{include file="common/head"/}
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div class="admin-main fadeInUp animated">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>{$title}</legend>
+            </fieldset>
+            <form class="layui-form layui-form-pane" method="post" >
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-4">
+                        <input type="text" name="username" lay-verify="required" placeholder="姓名" class="layui-input" value="{:session('username')}" disabled="">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux red">*</div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-4">
+                        <input type="text" name="password" placeholder="密码" lay-verify="required" class="layui-input" value="">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux red">*</div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+                        <a href="{:url('index')}" class="layui-btn layui-btn-primary">返回</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{include file="common/footer"/}
+<script src="__JS__/jquery.2.1.1.min.js"></script>
+<script src="__STATIC__/layui/lay/modules/layer.js"></script>
+<script>
+    layui.use('form', function(){
+        var form = layui.form, $ = layui.jquery;;
+        form.on('submit(submit)', function (data) {
+//            var fields = $(data.form).serialize();//转换表单数组
+            $.post('{:url("editPwd")}',data.field, function (res) {
+                if (res.code > 0) {
+                    layer.msg(res.msg, {time: 1800, icon: 2});
+                } else {
+                    layer.msg(res.msg, {time: 1800, icon: 2});
+                }
+            });
+        });
+
+    });
+
+</script>

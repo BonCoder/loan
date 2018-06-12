@@ -1,0 +1,80 @@
+{include file="common/head"/}
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div class="admin-main fadeInUp animated">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>{$title}</legend>
+            </fieldset>
+            <form class="layui-form layui-form-pane" method="post" >
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-4">
+                        <input type="text" name="username" lay-verify="required" placeholder="姓名" class="layui-input" value="{$info['username']}" >
+                    </div>
+                    <div class="layui-form-mid layui-word-aux red">*</div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-4">
+                        <input type="text" name="password" placeholder="如果不修改则不填！" class="layui-input" value="">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">账户权限</label>
+                    <div class="layui-input-4">
+                        <select name="type" lay-verify="required" >
+                            {volist name='type' id='vv' }
+                            {if condition="$vv['id'] eq $info['type']"}
+                            <option value="{$vv['id']}" selected>{$vv['t_name']}</option>
+                            {else /}
+                            <option value="{$vv['id']}">{$vv['t_name']}</option>
+                            {/if}
+                            {/volist}
+                        </select>
+                    </div>
+                    <div class="layui-form-mid layui-word-aux red">*</div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="hidden" value="{$info['id']}" name="id">
+                        <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+                        <a href="{:url('index')}" class="layui-btn layui-btn-primary">返回</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <fieldset class="layui-elem-field" style="width: 800px;">
+            <legend>说明</legend>
+            <div class="layui-field-box">
+                <p style="font-size: 16px;">
+                    1.	 录入（录入基本信息，上传相关资料）<br>
+                    2.	审核（核查录入信息的准确性，有错误可不通过，打回录入权限）<br>
+                    3.	变更（客户信息有更改的，如身份证到期，银行卡注销换卡，手机号更换等）<br>
+                    4.	财务（主要进行还款确认的标记，及客户是否结清）<br>
+                    5.	贷后管理 （进行短信提醒催款，查看催收记录）<br>
+                </p>
+            </div>
+        </fieldset>
+
+    </div>
+{include file="common/footer"/}
+<script src="__JS__/jquery.2.1.1.min.js"></script>
+<script src="__STATIC__/layui/lay/modules/layer.js"></script>
+<script>
+    layui.use('form', function(){
+        var form = layui.form, $ = layui.jquery;;
+        form.on('submit(submit)', function (data) {
+//            var fields = $(data.form).serialize();//转换表单数组
+            $.post('{:url("edit")}',data.field, function (res) {
+                if (res.code > 0) {
+                    layer.msg(res.msg, {time: 1800, icon: 1});
+                } else {
+                    layer.msg(res.msg, {time: 1800, icon: 2});
+                }
+            });
+        });
+
+    });
+
+</script>
