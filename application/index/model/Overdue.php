@@ -8,16 +8,23 @@ class Overdue extends Model
    protected $table = "loa_callback";
 
     public function getPageResult($key,$page,$pageSize){
-        $list=db('loa_collect')->alias('lc')
+        $list=db('loa_remark')->alias('lc')
             ->join('loa_user lu','lu.id = lc.loa_uid','left')
             ->join('sys_user su','su.id = lc.sys_uid','left')
-            ->field('lc.*,lu.username,su.username as sysname')
-            ->where('lu.username','like',"%".$key."%")
+            ->join('loa_callback lb','lc.loa_uid = lb.loa_uid')
+            ->join('loa_car lr','lr.id = lb.car_id','left')
+            ->field('lc.*,lu.username,su.username as sysname,lr.plate')
+            ->where('lc.name','in',['电话催收','短信催收'])
+            ->where(function ($query) use ($key){
+                $query->where('lu.username','like',"%".$key."%")->whereOr('lr.plate','like',"%".$key."%");
+            })
             ->order('lc.id desc')
             ->paginate(array('list_rows'=>$pageSize,'page'=>$page))
             ->toArray();
+
         return $result = ['code'=>0,'msg'=>'获取成功!','data'=>$list['data'],'count'=>$list['total'],'rel'=>1];
     }
+
     public function getOverResult($data,$page,$pageSize,$wheres = array()){
         if(isset($data['filed'])){
             $wheres[$data['filed']] = array('like', '%'.$data['keyword'].'%');

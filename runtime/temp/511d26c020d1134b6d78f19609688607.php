@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:58:"/alidata/www/loan/application/index/view/loan/overdue.html";i:1528358818;s:57:"/alidata/www/loan/application/index/view/common/head.html";i:1521180510;s:59:"/alidata/www/loan/application/index/view/common/footer.html";i:1521644862;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:58:"/alidata/www/loan/application/index/view/loan/overdue.html";i:1528862044;s:57:"/alidata/www/loan/application/index/view/common/head.html";i:1521180510;s:59:"/alidata/www/loan/application/index/view/common/footer.html";i:1528860026;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +27,9 @@
         <a href="<?php echo url('overdue'); ?>" class="layui-btn">刷新数据</a>
         <!--<button type="button" class="layui-btn layui-btn-danger" id="delAll">批量删除</button>-->
     </div>
+
     <table class="layui-table" id="list" lay-filter="list"></table>
+
 </div>
 <script type="text/html" id="number">
     <div class="layui-progress layui-progress-big" lay-showPercent="true" style="margin-top: 5px" lay-filter="demo">
@@ -50,8 +52,9 @@
 
 
 <script>
-    layui.use(['table','element'], function() {
-        var table = layui.table, $ = layui.jquery;
+    layui.use(['table','element','laydate'], function() {
+        var table = layui.table, $ = layui.jquery,laydate = layui.laydate;
+
         var element = layui.element;
         var tableIn = table.render({
             id: 'user',
@@ -166,21 +169,28 @@
                     }
                 });
             }else if (obj.event === 'phone') {
-                layer.prompt({
-                    formType: 2
-                    ,title: '请输入电话催收情况'
-                    ,value: ''
-                }, function(value, index){
-                    $.post("<?php echo url('getRemark'); ?>",{id:data.loa_uid,remark:value,name:'电话催收'},function(res){
-                        layer.close(index);
-                        if(res.code===1){
-                            layer.msg(res.msg,{time:1000,icon:1});
-                            tableIn.reload();
-                        }else{
-                            layer.msg('发送失败！',{time:1000,icon:2});
-                        }
-                    });
+                layer.open({
+                    type: 2,
+                    title: '请输入电话催收情况',
+                    content: "/index/loan/mobile?id="+data.loa_uid,
+                    area: ['400px', '400px'],
+                    maxmin: true
                 });
+                // layer.prompt({
+                //     formType: 2
+                //     ,title: '请输入电话催收情况'
+                //     ,value: ''
+                // }, function(value, index){
+                //     $.post("<?php echo url('getRemark'); ?>",{id:data.loa_uid,remark:value,name:'电话催收'},function(res){
+                //         layer.close(index);
+                //         if(res.code===1){
+                //             layer.msg(res.msg,{time:1000,icon:1});
+                //             tableIn.reload();
+                //         }else{
+                //             layer.msg('发送失败！',{time:1000,icon:2});
+                //         }
+                //     });
+                // });
             }
         });
 

@@ -30,7 +30,8 @@ class Overdue extends Common
      * User: Bob
      * Date: 2018年3月27日
      */
-      public function  collection(){
+      public function  collection()
+      {
           if(request()->isPost()){
               $Overdue = new OverdueModel();
               $key=input('post.key');
@@ -39,6 +40,7 @@ class Overdue extends Common
               return $Overdue->getPageResult($key,$page,$pageSize);
           }
           $this->assign('title','催收记录');
+
           return view('overdue/collection');
       }
 

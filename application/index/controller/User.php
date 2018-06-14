@@ -58,7 +58,7 @@ class User extends Common
         $interest = db('loa_interest')->select();
         $area = db('loa_area')->select();
         $plate = db('loa_car')->field('id,plate')->select();
-        $remark = db('loa_remark')->where(['name'=>'审核','loa_uid'=>$id])->column('remark');
+        $remark = db('loa_remark')->where('loa_uid',$id)->column('remark');
         $this->assign([
             'data'=>$result,
             'images'=>$images,
@@ -221,21 +221,23 @@ class User extends Common
             'interest'=>$interest,    //贷款利率
             'remark'=>$remark,         //修改备注
             'plate'=>$plate,           //车牌号
-            'car_id'=>$result['car_id'],  //车牌ID
             'area'=>$area             //地区
             ]);
         $this->assign('title','修改用户');
         return view('user/edit');
     }
 
-    public function getCars(Request $request){
+    public function getCars(Request $request)
+    {
         $car = new CarModel();
         if($request->isPost()){
             $data=$request->post();
             $page =input('page')? intval(input('page')):1;
             $pageSize =input('limit')?input('limit'):config('pageSize');
+
             return $car->getPageResult($data,$page,$pageSize);
         }
+
         return view('user/car');
     }
 
@@ -246,38 +248,61 @@ class User extends Common
             $data = $request->post();
             $car_id = $car->addCar($data);
             if($car_id){
+
                 $imgs = '';
-                if(isset($data['dengji'])){
-                    $imgs = $imgs.implode(' ',$data['dengji']).' ';
-                }
-                if(isset($data['xingshi'])){
-                    $imgs = $imgs.implode(' ',$data['xingshi']).' ';
-                }
-                if(isset($data['jiaoqiangxian'])){
-                    $imgs = $imgs.implode(' ',$data['jiaoqiangxian']).' ';
-                }
-                if(isset($data['shangyexian'])){
-                    $imgs = $imgs.implode(' ',$data['shangyexian']).' ';
-                }
-                if(isset($data['wanshui'])){
-                    $imgs = $imgs.implode(' ',$data['wanshui']).' ';
-                }
-                if(isset($data['jidongche'])){
-                    $imgs = $imgs.implode(' ',$data['jidongche']).' ';
-                }
-                if(isset($data['baoxian'])){
-                    $imgs = $imgs.implode(' ',$data['baoxian']).' ';
-                }
-                if(isset($data['chelia'])){
-                    $imgs = $imgs.implode(' ',$data['chelia']).' ';
+                $fileds = ['dengji','xingshi','jiaoqiangxian','shangyexian','wanshui','jidongche','baoxian','chelia'];
+                foreach ($data as $key => $value){
+                    if(in_array($key,$fileds)){
+                        $imgs = $imgs.implode(' ',$data['dengji']).' ';
+                    }
                 }
                 $pdf = makePDF($imgs,'car_id_'.$car_id);   //生成PDF
                 $car->updatePdf('车辆信息',$pdf,$car_id,2);  //添加PDF到数据库
+
                 return json(['code'=>1,'msg'=>'添加成功','url'=>'getCars']);
             }
         }
         $this->assign('title','添加车辆');
+
         return view('user/addCar');
+    }
+
+    public function editCar(Request $request)
+    {
+        $car = new CarModel();
+
+        if($request->isPost()){
+            $data = $request->post();
+            $car_id = $car->editCar($data);
+            $fileds_1 = ['dengji','xingshi','jiaoqiangxian','shangyexian','wanshui','jidongche','baoxian','chelia'];
+
+            if($car_id){
+                $imgs = '';
+                foreach ($data as $key => $value){
+                    if(in_array($key,$fileds_1)){
+                        $imgs = $imgs.implode(' ',$value).' ';
+                    }
+                }
+                $pdf = makePDF($imgs,'car_id_'.$car_id);   //生成PDF
+                $car->updatePdf('车辆信息',$pdf,$car_id,2);  //添加PDF到数据库
+                return json(['code'=>1,'msg'=>'修改成功','url'=>'getCars']);
+            }
+        }
+
+        $id = $request->get('id',0);
+        $result = $car->getCarIno($id);
+        $fileds_2 = ['ime','dengji','xingshi','jiaoqiangxian','shangyexian','wanshui','jidongche','baoxian','chelia'];
+
+        foreach ($result as $key => $value){
+           if(in_array($key,$fileds_2)){
+               $result[$key] = explode(',',$value);
+           }
+        }
+
+        $this->assign('data',$result);
+        $this->assign('title','修改车辆详情');
+
+        return view('user/editCar');
     }
 
     public function upload()

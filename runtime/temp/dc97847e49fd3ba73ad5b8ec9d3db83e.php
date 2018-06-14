@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:55:"/alidata/www/loan/application/index/view/loan/wait.html";i:1528344012;s:57:"/alidata/www/loan/application/index/view/common/head.html";i:1521180510;s:59:"/alidata/www/loan/application/index/view/common/footer.html";i:1521644862;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:55:"/alidata/www/loan/application/index/view/loan/wait.html";i:1528879587;s:57:"/alidata/www/loan/application/index/view/common/head.html";i:1521180510;s:59:"/alidata/www/loan/application/index/view/common/footer.html";i:1528860026;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,6 +31,7 @@
 </div>
 <script type="text/html" id="action">
     <a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="confirm">提交凭证</a>
+    <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="fail">驳回</a>
 </script>
 <script type="text/javascript" src="__STATIC__/layui/layui.all.js"></script>
 
@@ -49,6 +50,7 @@
                 {checkbox:true,fixed: true},
                 {field: 'loa_uid', title: 'id', width: 50, fixed: true},
                 {field: 'username', title: '姓名', width: 100},
+                {field: 'total', title: '金额', width: 80},
                 {field: 'number', title: '总期数', width: 80},
                 {field: 'mobile', title: '手机号', width: 125},
                 {field: 'plate', title: '车牌号', width: 150},
@@ -82,6 +84,17 @@
                    content: "<?php echo url('voucher'); ?>?id="+data.loa_uid,
                    area: ['850px', '600px'],
                    maxmin: true
+               });
+           }else if (obj.event === 'fail'){
+               layer.prompt({
+                   formType: 2
+                   ,title: '请添加拒绝理由'
+                   ,value: ''
+               }, function(value,index){
+                   $.post("<?php echo url('updateStatue'); ?>",{id:data.loa_uid,remark:value,status:9},function (data) {
+                       layer.close(index);
+                       location.href = "<?php echo url('wait'); ?>";
+                   });
                });
            }
         });

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:59:"/alidata/www/loan/application/index/view/system/record.html";i:1528357537;s:57:"/alidata/www/loan/application/index/view/common/head.html";i:1521180510;s:59:"/alidata/www/loan/application/index/view/common/footer.html";i:1521644862;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:59:"/alidata/www/loan/application/index/view/system/record.html";i:1528357537;s:57:"/alidata/www/loan/application/index/view/common/head.html";i:1521180510;s:59:"/alidata/www/loan/application/index/view/common/footer.html";i:1528860026;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>

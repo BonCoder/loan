@@ -12,7 +12,7 @@ class Loan extends Model
             ->join('loa_callback lc','lu.id = lc.loa_uid','left')
             ->join('loa_periods lp','lp.id = lu.pid','left')
             ->join('loa_car c','c.id = lc.car_id','left')
-            ->field('lc.*,lu.username,lu.mobile,lp.number,c.plate,c.ime,lu.entry_at')
+            ->field('lc.*,lu.username,lu.mobile,lp.number,c.plate,c.ime,lu.entry_at,lu.total')
             ->where('lu.username','like',"%".$key."%")
             ->where('lu.status','=',$status)
             ->group('lu.id')

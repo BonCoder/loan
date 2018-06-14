@@ -15,6 +15,7 @@
 </div>
 <script type="text/html" id="action">
     <a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="confirm">提交凭证</a>
+    <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="fail">驳回</a>
 </script>
 {include file="common/footer"/}
 <script>
@@ -31,6 +32,7 @@
                 {checkbox:true,fixed: true},
                 {field: 'loa_uid', title: 'id', width: 50, fixed: true},
                 {field: 'username', title: '姓名', width: 100},
+                {field: 'total', title: '金额', width: 80},
                 {field: 'number', title: '总期数', width: 80},
                 {field: 'mobile', title: '手机号', width: 125},
                 {field: 'plate', title: '车牌号', width: 150},
@@ -64,6 +66,17 @@
                    content: "{:url('voucher')}?id="+data.loa_uid,
                    area: ['850px', '600px'],
                    maxmin: true
+               });
+           }else if (obj.event === 'fail'){
+               layer.prompt({
+                   formType: 2
+                   ,title: '请添加拒绝理由'
+                   ,value: ''
+               }, function(value,index){
+                   $.post("{:url('updateStatue')}",{id:data.loa_uid,remark:value,status:9},function (data) {
+                       layer.close(index);
+                       location.href = "{:url('wait')}";
+                   });
                });
            }
         });

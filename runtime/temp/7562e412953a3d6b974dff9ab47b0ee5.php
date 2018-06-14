@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:56:"/alidata/www/loan/application/index/view/user/index.html";i:1528354070;s:57:"/alidata/www/loan/application/index/view/common/head.html";i:1521180510;s:59:"/alidata/www/loan/application/index/view/common/footer.html";i:1521644862;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:56:"/alidata/www/loan/application/index/view/user/index.html";i:1528873976;s:57:"/alidata/www/loan/application/index/view/common/head.html";i:1521180510;s:59:"/alidata/www/loan/application/index/view/common/footer.html";i:1528860026;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,7 +55,7 @@
     {{# if(d.status === 2){ }}
     <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="info">提交资料</button>
     {{# } }}
-    {{# if(d.status === 3){ }}
+    {{# if(d.status === 3 || d.status === 9){ }}
     <a href="/index/user/edit?id={{d.id}}" class="layui-btn layui-btn-normal layui-btn-sm">编辑</a>
     <a href="<?php echo url('getStatus'); ?>?id={{d.id}}" class="layui-btn layui-btn-normal layui-btn-sm">查看原因</a>
     {{# } }}
@@ -91,6 +91,9 @@
     {{# } }}
     {{# if(d.status === 8){ }}
     <span style="color: green">已结清</span>
+    {{# } }}
+    {{# if(d.status === 9){ }}
+    <span style="color: red">放款失败</span>
     {{# } }}
 </script>
 <script type="text/javascript" src="__STATIC__/layui/layui.all.js"></script>

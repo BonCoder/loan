@@ -23,6 +23,10 @@ class Car extends Model
           return $result = ['code'=>0,'msg'=>'获取成功!','data'=>$list['data'],'count'=>$list['total'],'rel'=>1];
       }
 
+      public function getCarIno($id)
+      {
+          return db('loa_car')->where('id',$id)->find();
+      }
 
       public function addCar($data){
           $where['plate'] = $data['plate'];
@@ -43,7 +47,7 @@ class Car extends Model
           return $car_id;
       }
 
-    public function edit($data){
+    public function editCar($data){
         $where['plate'] = $data['plate'];
         $where['pingpai'] = $data['pingpai'];
         $where['xinghao'] = $data['xinghao'];

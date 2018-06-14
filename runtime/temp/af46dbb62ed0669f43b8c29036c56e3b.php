@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:64:"/alidata/www/loan/application/index/view/overdue/collection.html";i:1524642506;s:57:"/alidata/www/loan/application/index/view/common/head.html";i:1521180510;s:59:"/alidata/www/loan/application/index/view/common/footer.html";i:1521644862;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:64:"/alidata/www/loan/application/index/view/overdue/collection.html";i:1528871586;s:57:"/alidata/www/loan/application/index/view/common/head.html";i:1521180510;s:59:"/alidata/www/loan/application/index/view/common/footer.html";i:1528860026;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +21,7 @@
     </fieldset>
     <div class="demoTable">
         <div class="layui-inline">
-            <input class="layui-input" name="key" id="key" placeholder="关键字">
+            <input class="layui-input" name="key" id="key" placeholder="用户名或车牌号">
         </div>
         <button class="layui-btn" id="search" data-type="reload">搜索</button>
         <a href="<?php echo url('collection'); ?>" class="layui-btn">刷新数据</a>
@@ -33,10 +33,6 @@
     <div class="layui-progress layui-progress-big" lay-showPercent="true" style="margin-top: 5px" lay-filter="demo">
         <div class="layui-progress-bar layui-bg-blue" lay-percent="{{d.old_num}} / {{d.number}}"></div>
     </div>
-</script>
-<script type="text/html" id="action">
-    <a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="confirm">确认还款</a>
-    <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>
 </script>
 <script type="text/javascript" src="__STATIC__/layui/layui.all.js"></script>
 
@@ -54,11 +50,12 @@
             cols: [[
                 {checkbox:true,fixed: true},
                 {field: 'id', title: 'id', width: 50, fixed: true},
+                {field: 'name', title: '催收方式', width: 100},
                 {field: 'username', title: '姓名', width: 100},
-                {field: 'collect_t', title: '催款日期', width: 180},
-                {field: 'dates', title: '逾期天数', width: 200},
+                {field: 'plate', title: '车牌号', width: 100},
+                {field: 'created_at', title: '催款日期', width: 180},
+                {field: 'remark', title: '备注', width: 400},
                 {field: 'sysname', title: '操作人员', width: 200}
-//                {width: 200, align: 'center', toolbar: '#action'}
             ]],
             limit: 10, //每页默认显示的数量
             done: function(obj){

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:54:"/alidata/www/loan/application/index/view/user/car.html";i:1528354990;s:57:"/alidata/www/loan/application/index/view/common/head.html";i:1521180510;s:59:"/alidata/www/loan/application/index/view/common/footer.html";i:1521644862;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:54:"/alidata/www/loan/application/index/view/user/car.html";i:1528855940;s:57:"/alidata/www/loan/application/index/view/common/head.html";i:1521180510;s:59:"/alidata/www/loan/application/index/view/common/footer.html";i:1521644862;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,7 +45,7 @@
     {{# } }}
 </script>
 <script type="text/html" id="action">
-      <a href="/index/user/edit?id={{d.id}}" class="layui-btn layui-btn-normal layui-btn-sm">编辑</a>
+      <a href="/index/user/editCar?id={{d.id}}" class="layui-btn layui-btn-normal layui-btn-sm">编辑</a>
       <!--<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>-->
       <a href="{{d.pdf_url}}" class="layui-btn layui-btn-warm layui-btn-sm" target="_blank">查看PDF</a>
 </script>

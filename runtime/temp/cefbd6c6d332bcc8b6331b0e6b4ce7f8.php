@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:56:"/alidata/www/loan/application/index/view/loan/index.html";i:1528352777;s:57:"/alidata/www/loan/application/index/view/common/head.html";i:1521180510;s:59:"/alidata/www/loan/application/index/view/common/footer.html";i:1521644862;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:56:"/alidata/www/loan/application/index/view/loan/index.html";i:1528857902;s:57:"/alidata/www/loan/application/index/view/common/head.html";i:1521180510;s:59:"/alidata/www/loan/application/index/view/common/footer.html";i:1521644862;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -101,7 +101,12 @@
                     layer.close(index);
                 });
             }else if (obj.event === 'confirm') {
-                layer.confirm('您确认已还款？', function(index){
+                layer.confirm(
+                    '姓名: '+data.username+
+                    '<br>期数: '+data.old_num+'/'+data.number+' 期'+
+                    '<br>还款金额: '+data.money+
+                    '<br>您确认已还款？'
+                    , function(index){
                     var loading = layer.load(1, {shade: [0.1, '#fff']});
                     $.post("<?php echo url('confirm'); ?>",{id:data.loa_uid},function(res){
                         layer.close(loading);

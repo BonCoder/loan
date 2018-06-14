@@ -13,7 +13,8 @@ class Loan extends Common
      * User: Bob
      * Date: 2018年3月27日
      */
-    public function index(){
+    public function index()
+    {
         if(request()->isPost()){
             $loan = new LoanModel();
             $key=input('post.key');
@@ -22,7 +23,20 @@ class Loan extends Common
             return $loan->getPageResult($key,$page,$pageSize,7);
         }
         $this->assign('title','贷款回收');
+
         return view('loan/index');
+    }
+
+    /**
+     * Content: 电话统计.
+     * User: Bob
+     * Date: 2018年6月13日
+     */
+    public function mobile()
+    {
+        $this->assign('id',input('id',0));
+
+        return view('loan/mobile');
     }
 
     /**
@@ -30,7 +44,8 @@ class Loan extends Common
      * User: Bob
      * Date: 2018年6月6日
      */
-    public function wait(){
+    public function wait()
+    {
         if(request()->isPost()){
             $loan = new LoanModel();
             $key=input('post.key');
@@ -39,7 +54,23 @@ class Loan extends Common
             return $loan->getPageResult($key,$page,$pageSize,6);
         }
         $this->assign('title','待放款');
+
         return view('loan/wait');
+    }
+
+    /**
+     * Content: 通过审核.
+     * User: Bob
+     * Date: 2018年3月31日
+     */
+    public function updateStatue(LoanModel $loan){
+        $id = input('id',0);
+        $status = input('status',1);
+        $remark = input('remark','');
+        db('loa_user')->where('id',$id)->setField('status',$status);
+        $loan->setRemark($id,$remark,'放款失败');
+
+        return json(['code'=>1,'msg'=>'提交成功']);
     }
 
     /**
@@ -47,7 +78,8 @@ class Loan extends Common
      * User: Bob
      * Date: 2018年6月6日
      */
-    public function voucher(Request $request){
+    public function voucher(Request $request)
+    {
         if(request()->isPost()){
             $user = new UserModel();
             $data = $request->post();
@@ -70,6 +102,7 @@ class Loan extends Common
         }
         $this->assign('id',$request->get('id',0));
         $this->assign('title','提交凭证');
+
         return view('loan/voucher');
     }
 
@@ -78,7 +111,8 @@ class Loan extends Common
      * User: Bob
      * Date: 2018年3月27日
      */
-    public function overdue(){
+    public function overdue()
+    {
         if(request()->isPost()){
             $loan = new LoanModel();
             $key=input('post.key');
@@ -87,6 +121,7 @@ class Loan extends Common
             return $loan->getOverdue($key,$page,$pageSize);
         }
         $this->assign('title','逾期统计');
+
         return view('loan/overdue');
     }
 
@@ -96,7 +131,8 @@ class Loan extends Common
      * User: Bob
      * Date: 2018年3月31日
      */
-    public function settle(){
+    public function settle()
+    {
         $id=input('post.id');
         $num = db('loa_callback')->where('loa_uid',$id)->value('new_num');
         if($num == 0){
@@ -114,7 +150,8 @@ class Loan extends Common
      * User: Bob
      * Date: 2018年3月27日
      */
-    public function remind(){
+    public function remind()
+    {
         $info= request()->post();
         $data=db('loa_user')->where('id',$info['id'])->find();
         $sex = $data['sex']==1 ? '先生' : '女士';
@@ -142,8 +179,10 @@ class Loan extends Common
         $name = request()->post('name','');
         if($remark){
            $loan->setRemark($loa_uid,$remark,$name);
+
            return json(['code'=>1,'msg'=>'发送成功']);
         }
+
         return json(['code'=>0,'msg'=>'发送失败']);
     }
 
@@ -153,7 +192,8 @@ class Loan extends Common
      * User: Bob
      * Date: 2018年3月27日
      */
-    public function confirm(){
+    public function confirm()
+    {
         $data= request()->post();
         $id = db('loa_callback')
             ->where('loa_uid',$data['id'])
@@ -176,6 +216,7 @@ class Loan extends Common
         }else{
             $result['code'] = -1;
         }
+
         return $result;
     }
 
@@ -184,7 +225,8 @@ class Loan extends Common
      * User: Bob
      * Date: 2018年3月27日
      */
-    public function delete(){
+    public function delete()
+    {
         $id = input('post.id');
         db('loa_callback')->where('loa_uid',$id)->delete();
         db('loa_car')->where('loa_uid',$id)->delete();
@@ -195,6 +237,7 @@ class Loan extends Common
         }else{
             $result['code'] = -1;
         }
+
         return $result;
     }
 
@@ -203,7 +246,8 @@ class Loan extends Common
      * User: Bob
      * Date: 2018年3月27日
      */
-    public function deleteAll(){
+    public function deleteAll()
+    {
         $map['loa_id'] =array('in',input('param.ids/a'));
         $ids['id'] =array('in',input('param.ids/a'));
         // 启动事务
@@ -226,7 +270,8 @@ class Loan extends Common
 
 
     /*发送短信*/
-    public function set_phone($Mobile,$Content,$Sms,$SendTime=''){
+    public function set_phone($Mobile,$Content,$Sms,$SendTime='')
+    {
         header("Content-type: text/html; charset=utf-8");
         date_default_timezone_set('PRC'); //设置默认时区为北京时间
         $CorpID = 'XAJS003530';
