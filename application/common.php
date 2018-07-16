@@ -66,7 +66,7 @@ function makePDF($filesUrl,$item){
     $pdf->SetSubject('TCPDF Tutorial');
     $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
     // 设置页眉显示的内容  logo、logo大小、pdf文件名、网站说明(www.xxx.com)
-    $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, '金海顿'.' 001', PDF_HEADER_STRING, array(0,64,255), array(0,64,128));
+    //$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, '金海顿'.' 001', PDF_HEADER_STRING, array(0,64,255), array(0,64,128));
     // 设置页脚显示的内容
     $pdf->setFooterData(array(0,64,0), array(0,64,128));
     // 设置页眉字体
