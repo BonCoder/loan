@@ -269,8 +269,9 @@ class User extends Common
                         $imgs = $imgs.implode(' ',$value).' ';
                     }
                 }
-                $pdf = makePDF($imgs,'car_id_'.$car_id);   //生成PDF
-                $car->updatePdf('车辆信息',$pdf,$car_id,2);  //添加PDF到数据库
+
+                $pdf = makePDF($imgs,'car_id_'.$data['id']);   //生成PDF
+                $car->updatePdf('车辆信息',$pdf,$data['id'],2);  //添加PDF到数据库
                 return json(['code'=>1,'msg'=>'修改成功','url'=>'getCars']);
             }
         }
