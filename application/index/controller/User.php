@@ -145,33 +145,19 @@ class User extends Common
             $data = request()->post();
             $uid = $user->edit($data);
             if($uid){
+                $filed_1 = ['yinghangka_1','yinghangka_2','shenfenzheng_1','shenfenzheng_2','jiashizheng'];
+                $filed_2 = ['liushui','zhengxing','shenqingbiao'];
                 $imgs = '';
-                if(isset($data['yinghangka_1'])){
-                    $imgs = $imgs.$data['yinghangka_1'].' ';
-                }
-                if(isset($data['yinghangka_2'])){
-                    $imgs = $imgs.$data['yinghangka_2'].' ';
-                }
-                if(isset($data['shenfenzheng_1'])){
-                    $imgs = $imgs.$data['shenfenzheng_1'].' ';
-                }
-                if(isset($data['shenfenzheng_2'])){
-                    $imgs = $imgs.$data['shenfenzheng_2'].' ';
-                }
-                if(isset($data['jiashizheng'])){
-                    $imgs = $imgs.$data['jiashizheng'].' ';
-                }
-                if(isset($data['liushui'])){
-                    $imgs = $imgs.implode(' ',$data['liushui']).' ';
-                }
-                if(isset($data['zhengxing'])){
-                    $imgs = $imgs.implode(' ',$data['zhengxing']).' ';
-                }
-                if(isset($data['shenqingbiao'])){
-                    $imgs = $imgs.implode(' ',$data['shenqingbiao']).' ';
+                foreach ($data as $key => $value){
+                    if(in_array($key,$filed_1)){
+                        $imgs .= $value.' ';
+                    }
+                    if(in_array($key,$filed_2)){
+                        $imgs .= implode(' ',$value).' ';
+                    }
                 }
                 $pdf = makePDF($imgs,$data['id']);   //生成PDF
-                $user->updatePdf('用户信息',$pdf,$uid,1);  //添加PDF到数据库
+                $user->updatePdf('用户信息',$pdf,$data['id'],1);  //添加PDF到数据库
             }
             if($uid){
                 if($data['remark']){
@@ -338,24 +324,12 @@ class User extends Common
         if($request->isPost()){
             $user = new UsersModel();
             $data = $request->post();
+            $filed = ['rongzi','shouchirongzi','shouju','zuchehetong','qichexiaoshou','qita'];
             $imgs = '';
-            if(isset($data['rongzi'])){
-                $imgs = $imgs.implode(' ',$data['rongzi']).' ';
-            }
-            if(isset($data['shouchirongzi'])){
-                $imgs = $imgs.implode(' ',$data['shouchirongzi']).' ';
-            }
-            if(isset($data['shouju'])){
-                $imgs = $imgs.implode(' ',$data['shouju']).' ';
-            }
-            if(isset($data['zuchehetong'])){
-                $imgs = $imgs.implode(' ',$data['zuchehetong']).' ';
-            }
-            if(isset($data['qichexiaoshou'])){
-                $imgs = $imgs.implode(' ',$data['qichexiaoshou']).' ';
-            }
-            if(isset($data['qita'])){
-                $imgs = $imgs.implode(' ',$data['qita']).' ';
+            foreach ($data as $key => $value){
+                if(in_array($key,$filed)){
+                    $imgs .= implode(' ',$value).' ';
+                }
             }
             $pdf = makePDF($imgs,$data['id'].'_qingkuan');   //生成PDF
             $user->updatePdf('请款资料',$pdf,$data['id'],1);  //添加PDF到数据库
