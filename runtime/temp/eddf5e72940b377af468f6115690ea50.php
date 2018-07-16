@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:58:"/alidata/www/loan/application/index/view/user/editCar.html";i:1528857344;s:57:"/alidata/www/loan/application/index/view/common/head.html";i:1521180510;s:59:"/alidata/www/loan/application/index/view/common/footer.html";i:1521644862;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:58:"/alidata/www/loan/application/index/view/user/editCar.html";i:1528857424;s:57:"/alidata/www/loan/application/index/view/common/head.html";i:1521180510;s:59:"/alidata/www/loan/application/index/view/common/footer.html";i:1528860026;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -253,7 +253,7 @@
             <div class="layui-input-block">
                 <input type="hidden" name="id" value="<?php echo $data['id']; ?>">
                 <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
-                <a href="<?php echo url('car'); ?>" class="layui-btn layui-btn-primary">返回</a>
+                <a href="<?php echo url('getCars'); ?>" class="layui-btn layui-btn-primary">返回</a>
             </div>
         </div>
     </form>

@@ -97,30 +97,16 @@ class User extends Common
            $data = request()->post();
            $uid = $user->addUser($data);
            if($uid){
+               $filed_1 = ['yinghangka_1','yinghangka_2','shenfenzheng_1','shenfenzheng_2','jiashizheng'];
+               $filed_2 = ['liushui','zhengxing','shenqingbiao'];
                $imgs = '';
-               if(isset($data['yinghangka_1'])){
-                   $imgs = $imgs.$data['yinghangka_1'].' ';
-               }
-               if(isset($data['yinghangka_2'])){
-                   $imgs = $imgs.$data['yinghangka_2'].' ';
-               }
-               if(isset($data['shenfenzheng_1'])){
-                   $imgs = $imgs.$data['shenfenzheng_1'].' ';
-               }
-               if(isset($data['shenfenzheng_2'])){
-                   $imgs = $imgs.$data['shenfenzheng_2'].' ';
-               }
-               if(isset($data['jiashizheng'])){
-                   $imgs = $imgs.$data['jiashizheng'].' ';
-               }
-               if(isset($data['liushui'])){
-                   $imgs = $imgs.implode(' ',$data['liushui']).' ';
-               }
-               if(isset($data['zhengxing'])){
-                   $imgs = $imgs.implode(' ',$data['zhengxing']).' ';
-               }
-               if(isset($data['shenqingbiao'])){
-                   $imgs = $imgs.implode(' ',$data['shenqingbiao']).' ';
+               foreach ($data as $key => $value){
+                   if(in_array($key,$filed_1)){
+                       $imgs .= $value.' ';
+                   }
+                   if(in_array($key,$filed_2)){
+                       $imgs .= implode(' ',$value).' ';
+                   }
                }
                $pdf = makePDF($imgs,$uid);
                $user->updatePdf('用户信息',$pdf,$uid,1);
