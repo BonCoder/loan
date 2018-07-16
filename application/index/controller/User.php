@@ -225,7 +225,7 @@ class User extends Common
                 $fileds = ['dengji','xingshi','jiaoqiangxian','shangyexian','wanshui','jidongche','baoxian','chelia'];
                 foreach ($data as $key => $value){
                     if(in_array($key,$fileds)){
-                        $imgs = $imgs.implode(' ',$data['dengji']).' ';
+                        $imgs = $imgs.implode(' ',$value).' ';
                     }
                 }
                 $pdf = makePDF($imgs,'car_id_'.$car_id);   //生成PDF
