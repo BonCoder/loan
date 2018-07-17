@@ -190,7 +190,7 @@
                         <p id="demoText3"></p>
                     </div>
                 </div>
-                <div class="layui-form-mid layui-word-aux red">*可多选</div>
+                <div class="layui-form-mid layui-word-aux">*可多选</div>
             </div>
         </div>
         <div class="layui-form-item">
@@ -202,7 +202,7 @@
                         <p id="demoText4"></p>
                     </div>
                 </div>
-                <div class="layui-form-mid layui-word-aux red">*可多选</div>
+                <div class="layui-form-mid layui-word-aux">*可多选</div>
             </div>
         </div>
         <div class="layui-form-item">
@@ -214,7 +214,7 @@
                         <p id="demoText5"></p>
                     </div>
                 </div>
-                <div class="layui-form-mid layui-word-aux red">*可多选</div>
+                <div class="layui-form-mid layui-word-aux">*可多选</div>
             </div>
         </div>
         <div class="layui-form-item">
@@ -531,7 +531,7 @@
             var loading = layer.msg('正在生成PDF和保存数据...', {
                 icon: 16
                 ,shade: 0.01
-                ,time: 10000
+                ,time: 5000
             });
             $.post('{:url("User/add")}',fields, function (res) {
                 layer.close(loading);

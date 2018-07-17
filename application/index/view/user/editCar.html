@@ -535,7 +535,7 @@
             var loading = layer.msg('正在生成PDF和保存数据...', {
                 icon: 16
                 ,shade: 0.01
-                ,time: 10000
+                ,time: 5000
             });
             $.post('{:url("User/editCar")}',fields, function (res) {
                 layer.close(loading);
