@@ -95,6 +95,9 @@ class User extends Common
        if(request()->isPost()){
            $user = new UsersModel();
            $data = request()->post();
+		   if(db('loa_user')->where('identity',$data['identity'])->find()){
+			   return json(['code'=>0,'msg'=>'身份证已存在']);
+		   }
            $uid = $user->addUser($data);
            if($uid){
                $filed_1 = ['yinghangka_1','yinghangka_2','shenfenzheng_1','shenfenzheng_2','jiashizheng'];
@@ -143,6 +146,9 @@ class User extends Common
         $user = new UsersModel();
         if(request()->isPost()){
             $data = request()->post();
+			if(db('loa_user')->where('identity',$data['identity'])->find()){
+			   return json(['code'=>0,'msg'=>'身份证已存在']);
+		   }
             $uid = $user->edit($data);
             if($uid){
                 $filed_1 = ['yinghangka_1','yinghangka_2','shenfenzheng_1','shenfenzheng_2','jiashizheng'];
@@ -218,9 +224,11 @@ class User extends Common
         if($request->isPost()){
             $car = new CarModel();
             $data = $request->post();
+			if(db('loa_car')->where('chejia',$data['chejia'])->find()){
+			   return json(['code'=>0,'msg'=>'车架号已存在']);
+		   }
             $car_id = $car->addCar($data);
             if($car_id){
-
                 $imgs = '';
                 $fileds = ['dengji','xingshi','jiaoqiangxian','shangyexian','wanshui','jidongche','baoxian','chelia'];
                 foreach ($data as $key => $value){
@@ -391,7 +399,6 @@ class User extends Common
 
     public function delete($id=''){
         db('loa_callback')->where('loa_uid',$id)->delete();
-        db('loa_car_user_id')->where('loa_uid',$id)->delete();
         UsersModel::destroy($id);
         return $result = ['code'=>1,'msg'=>'删除成功!'];
     }
@@ -403,7 +410,6 @@ class User extends Common
         Db::startTrans();
         try{
             Db::table('loa_callback')->where($map)->delete();
-            Db::table('loa_car_user_id')->where($map)->delete();
             Db::table('loa_user')->where($ids)->delete();
             // 提交事务
             Db::commit();

@@ -129,13 +129,15 @@ class User extends Model
           $back['new_num'] = $num;
           $back['loa_uid'] = $uid;
           $back['sys_uid'] = session('uid');
-          $back['car_id'] = $data['car_id'];
+		  if(in_array('car_id',array_keys($data))){
+			  $back['car_id'] = $data['car_id'];
+		      db('loa_car')->where('id',$data['car_id'])->setField('status',1);  
+		  }
           $interest = db('loa_interest')->where('id',$data['interest'])->value('interest');
           $num = db('loa_periods')->where('id',$data['periods'])->value('number');
           $money = (($data['total']*$interest)+$data['total'])/$num;  // ((总额*利率)+总额)/期数 = 每月应还款
           $back['money'] = round($money,2);
           db('loa_callback')->insertGetId($back);
-          db('loa_car')->where('id',$data['car_id'])->setField('status',1);
           return $uid;
       }
 
@@ -160,7 +162,10 @@ class User extends Model
         $interest = db('loa_interest')->where('id',$data['interest'])->value('interest');
         $num = db('loa_periods')->where('id',$data['periods'])->value('number');
         $money = (($data['total']*$interest)+$data['total'])/$num;
-        $back['car_id'] = $data['car_id'];
+        if(in_array('car_id',array_keys($data))){
+			  $back['car_id'] = $data['car_id'];
+		      db('loa_car')->where('id',$data['car_id'])->setField('status',1);  
+		}
         $back['money'] = round($money,2);
         db('loa_callback')->where('loa_uid',$data['id'])->update($back);
         $img['yinghangka_1'] = $data['yinghangka_1'] ?? '';
