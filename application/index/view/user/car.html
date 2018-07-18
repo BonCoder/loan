@@ -30,7 +30,9 @@
 </script>
 <script type="text/html" id="action">
       <a href="/index/user/editCar?id={{d.id}}" class="layui-btn layui-btn-normal layui-btn-sm">编辑</a>
-      <!--<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>-->
+      {{# if(d.status === 0){ }}
+      <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>
+      {{# } }}
       <a href="{{d.pdf_url}}" class="layui-btn layui-btn-warm layui-btn-sm" target="_blank">查看PDF</a>
 </script>
 {include file="common/footer"/}
@@ -90,7 +92,7 @@
             }else if (obj.event === 'del') {
                 layer.confirm('您确定要删除该车辆吗？', function(index){
                     var loading = layer.load(1, {shade: [0.1, '#fff']});
-                    $.post("{:url('delete')}",{id:data.id},function(res){
+                    $.post("{:url('deleteCar')}",{id:data.id},function(res){
                         layer.close(loading);
                         if(res.code===1){
                             layer.msg(res.msg,{time:1000,icon:1});

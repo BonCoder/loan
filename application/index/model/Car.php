@@ -5,7 +5,9 @@ use think\Model;
 use think\Db;
 class Car extends Model
 {
-      protected $name = 'loa_car';
+      protected $table = 'loa_car';
+
+      protected $pk = 'id';
 
       public function getPageResult($data,$page,$pageSize){
           $wheres = array();

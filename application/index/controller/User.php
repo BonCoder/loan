@@ -1,6 +1,7 @@
 <?php
 namespace app\index\controller;
 
+use app\index\model\Car;
 use app\index\model\User as UsersModel;
 use think\File;
 use think\Db;
@@ -397,6 +398,17 @@ class User extends Common
     public function delete($id=''){
         db('loa_callback')->where('loa_uid',$id)->delete();
         UsersModel::destroy($id);
+        
+        return $result = ['code'=>1,'msg'=>'删除成功!'];
+    }
+
+    public function deleteCar($id=''){
+        $car =  Car::get($id);
+        if($car->status !== 0){
+            return $result = ['code'=>0,'msg'=>'删除失败!'];
+        }
+        $car->delete();
+
         return $result = ['code'=>1,'msg'=>'删除成功!'];
     }
 
