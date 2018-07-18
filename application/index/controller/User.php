@@ -397,8 +397,9 @@ class User extends Common
 
     public function delete($id=''){
         db('loa_callback')->where('loa_uid',$id)->delete();
+        db('loa_img')->where('loa_uid',$id)->delete();
         UsersModel::destroy($id);
-        
+
         return $result = ['code'=>1,'msg'=>'删除成功!'];
     }
 
