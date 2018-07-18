@@ -146,9 +146,6 @@ class User extends Common
         $user = new UsersModel();
         if(request()->isPost()){
             $data = request()->post();
-			if(db('loa_user')->where('identity',$data['identity'])->find()){
-			   return json(['code'=>0,'msg'=>'身份证已存在']);
-		   }
             $uid = $user->edit($data);
             if($uid){
                 $filed_1 = ['yinghangka_1','yinghangka_2','shenfenzheng_1','shenfenzheng_2','jiashizheng'];
