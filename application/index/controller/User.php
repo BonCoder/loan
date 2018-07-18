@@ -406,11 +406,11 @@ class User extends Common
     public function deleteCar($id=''){
         $car =  Car::get($id);
         if($car->status !== 0){
-            return $result = ['code'=>0,'msg'=>'删除失败!'];
+            return json(['code'=>0,'msg'=>'删除失败!']);
         }
         $car->delete();
 
-        return $result = ['code'=>1,'msg'=>'删除成功!'];
+        return json(['code'=>1,'msg'=>'删除成功!']);
     }
 
     public function delall(){
