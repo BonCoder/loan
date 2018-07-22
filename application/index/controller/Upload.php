@@ -8,12 +8,12 @@ use Qiniu\Storage\UploadManager;
 
 class Upload extends Controller
 {
-    public static function image($file=''){
+    public function file($file=''){
 //        if( !$file ){
 //            return '';
 //        }
 
-        $file = ROOT_PATH.'/public/pdf/jinhaidun_77.pdf';  //这里我代用了一个图片地址
+//        $file = ROOT_PATH.'/public/pdf/jinhaidun_77.pdf';  //这里我代用了一个图片地址
 
         $str = explode('.',$file);
         $ext = $str[count($str)-1]; // 获取后缀名

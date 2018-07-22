@@ -291,13 +291,15 @@ class User extends Common
         // 获取表单上传文件
         $file = request()->file($fileKey['0']);
         // 移动到框架应用根目录/public/uploads/ 目录下
-        $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+//        $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+        //移动到七牛云
+        $info = Upload::file($file);
+
         if ($info) {
             $result['code'] = 1;
             $result['info'] = '图片上传成功!';
-            $result['imgid'] = substr($info->getFilename(),1,5);
-            $path = str_replace('\\', '/', $info->getSaveName());
-            $result['url'] = '/uploads/' . $path;
+            $result['imgid'] = time();
+            $result['url'] = ROOT_PATH.DS.$info;
             return $result;
         } else {
             // 上传失败获取错误信息
