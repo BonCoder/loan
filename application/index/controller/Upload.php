@@ -9,9 +9,9 @@ use Qiniu\Storage\UploadManager;
 class Upload extends Controller
 {
     public static function image($file=''){
-        if( !$file ){
-            return '';
-        }
+//        if( !$file ){
+//            return '';
+//        }
 
         $file = ROOT_PATH.'/public/pdf/jinhaidun_77.pdf';  //这里我代用了一个图片地址
 
