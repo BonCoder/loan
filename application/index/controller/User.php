@@ -3,6 +3,8 @@ namespace app\index\controller;
 
 use app\index\model\Car;
 use app\index\model\User as UsersModel;
+use Qiniu\Auth;
+use Qiniu\Storage\UploadManager;
 use think\File;
 use think\Db;
 use think\Request;
@@ -290,22 +292,30 @@ class User extends Common
         $fileKey = array_keys(request()->file());
         // 获取表单上传文件
         $file = request()->file($fileKey['0']);
-        // 移动到框架应用根目录/public/uploads/ 目录下
-//        $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
-        //移动到七牛云
-        $info = Upload::file($file);
-
-        if ($info) {
-            $result['code'] = 1;
-            $result['info'] = '图片上传成功!';
-            $result['imgid'] = time();
-            $result['url'] = ROOT_PATH.DS.$info;
-            return $result;
-        } else {
+        // 要上传图片的本地路径
+        $filePath = $file->getRealPath();
+        $ext = pathinfo($file->getInfo('name'), PATHINFO_EXTENSION);  //后缀
+        $config = config('qiniu');
+        // 构建一个鉴权对象
+        $auth = new Auth($config['AccessKey'],$config['SecretKey']);
+        // 生成上传的token
+        $token = $auth->uploadToken($config['Bucket']);
+        // 上传到七牛后保存的文件名
+        $key = date('Y').'/'.date('m').'/'.substr(md5($file),0,5).date('YmdHis').mt_rand(0,9999).'.'.$ext;
+        // 初始化UploadManager类
+        $uploadMgr = new UploadManager();
+        list($ret,$err) = $uploadMgr->putFile($token,$key,$filePath);
+        if($err !== null){
             // 上传失败获取错误信息
             $result['code'] = 0;
             $result['info'] = '图片上传失败!';
             $result['url'] = '';
+            return $result;
+        }else{
+            $result['code'] = 1;
+            $result['info'] = '图片上传成功!';
+            $result['imgid'] = time();
+            $result['url'] = ROOT_PATH.DS.$key;
             return $result;
         }
     }
