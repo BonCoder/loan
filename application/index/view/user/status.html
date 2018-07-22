@@ -293,7 +293,7 @@
                 layer.close(layer.msg());//关闭上传提示窗口
                 if(res.code>0){
                     $('#image').val(res.url);
-                    $('#cateImage').append("<img class='layui-upload-img'  layer-src='__PUBLIC__"+res.url+"' src='__PUBLIC__"+res.url+"' ><input type='hidden' name='pdf_imgs[]' value='__PUBLIC__"+ res.url +"' />");
+                    $('#cateImage').append("<img class='layui-upload-img'  layer-src='"+res.url+"' src='"+res.url+"' ><input type='hidden' name='pdf_imgs[]' value='"+ res.url +"' />");
                 }else{
                     //如果上传失败
                     return layer.msg('上传失败');

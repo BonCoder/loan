@@ -316,7 +316,7 @@ class User extends Common
             $result['code'] = 1;
             $result['info'] = '图片上传成功!';
             $result['imgid'] = time();
-            $result['url'] = $domain.$key;
+            $result['url'] = $domain.DS.$key;
             return $result;
         }
     }
