@@ -104,7 +104,7 @@ function makePDF($filesUrl,$item){
     foreach ($files as $pic_url) {
         //如果是图片则添加到pdf中
         if($pic_url){
-            $img = file_get_contents('http://'.$_SERVER['HTTP_HOST'].$pic_url);
+            $img = file_get_contents($pic_url);
 //            if(strstr($name,'png') || strstr($name,'jpeg') || strstr($name,'jpg')) {
             $pdf->Image('@' .$img, '', '', ' ', ' ', '', '', 'N', false, 300, 'C', false, false, 1, false, false, true);
 //            }
