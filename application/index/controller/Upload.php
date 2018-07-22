@@ -8,7 +8,7 @@ use Qiniu\Storage\UploadManager;
 
 class Upload extends Controller
 {
-    public function file($file=''){
+    public static function file($file=''){
 //        if( !$file ){
 //            return '';
 //        }
