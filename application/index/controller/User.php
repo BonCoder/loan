@@ -305,6 +305,7 @@ class User extends Common
         // 初始化UploadManager类
         $uploadMgr = new UploadManager();
         list($ret,$err) = $uploadMgr->putFile($token,$key,$filePath);
+        $domain = $config['Domain'];
         if($err !== null){
             // 上传失败获取错误信息
             $result['code'] = 0;
@@ -315,7 +316,7 @@ class User extends Common
             $result['code'] = 1;
             $result['info'] = '图片上传成功!';
             $result['imgid'] = time();
-            $result['url'] = ROOT_PATH.DS.$key;
+            $result['url'] = $domain.$key;
             return $result;
         }
     }
