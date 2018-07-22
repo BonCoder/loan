@@ -113,8 +113,13 @@ function makePDF($filesUrl,$item){
 
     //保存PDF
     $saveUrl = ROOT_PATH .'public/pdf/'.$name;
+    //保存到指定路径
     $pdf->Output($saveUrl, 'F');
-    $backUrl = '/public/pdf/'.$name;
+    //上传PDF文件到七牛云
+    $backUrl = \app\index\controller\Upload::file($saveUrl);
+    //删除本地PDF文件
+    @unlink($saveUrl);
+
     return $backUrl;
 }
 

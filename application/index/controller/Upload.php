@@ -27,7 +27,7 @@ class Upload extends Controller
         $token = $auth->uploadToken($config['Bucket']);
         // 上传到七牛后保存的文件名
         $key = date('Y').'/'.date('m').'/'.substr(md5($file),0,5).date('YmdHis').mt_rand(0,9999).'.'.$ext;
-
+        $domain = $config['Domain'];
         // 初始化UploadManager类
         $uploadMgr = new UploadManager();
         list($ret,$err) = $uploadMgr->putFile($token,$key,$file);
@@ -35,7 +35,7 @@ class Upload extends Controller
             return '';
         }else{
             // return $key;
-            return $key;
+            return $domain.DS.$key;
         }
     }
 
