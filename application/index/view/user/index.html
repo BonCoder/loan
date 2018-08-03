@@ -45,6 +45,7 @@
     {{# } }}
     {php}}{/php}
     <button class="layui-btn layui-btn-warm layui-btn-sm" lay-event="pdf">查看PDF</button>
+    <button class="layui-btn layui-btn-warm layui-btn-sm" lay-event="repayment">还款凭证</button>
 </script>
 <script type="text/html" id="sex">
     {{# if(d.sex =='1'){ }}
@@ -173,6 +174,16 @@
                     maxmin: true
                 });
                 layer.full(info);
+            }else if (obj.event === 'repayment'){
+                $.post("{:url('getRepayment')}",{loa_uid:data.id}, function (res) {
+                    if(res.code === 1){
+                        layer.open({
+                            type:1,
+                            content:res.data,
+                        });
+                    }
+                });
+
             }
         });
 

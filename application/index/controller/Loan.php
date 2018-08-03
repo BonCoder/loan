@@ -3,6 +3,7 @@ namespace app\index\controller;
 use app\index\model\Callback;
 use app\index\model\Loan  as LoanModel;
 use app\index\model\Repayment;
+use Carbon\Carbon;
 use think\Controller;
 use think\Db;
 use think\Request;
@@ -357,6 +358,8 @@ class Loan extends Common
         $repayment->loa_uid = $loa_uid;
         $repayment->back_img = $imgs;
         $repayment->remark = $remark;
+        $repayment->created = Carbon::now();
+        $repayment->updated = Carbon::now();
 
         if($repayment->save()){
             return json(['code'=>1,'msg'=>'上传成功']);

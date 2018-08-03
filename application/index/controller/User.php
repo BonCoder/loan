@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use app\index\model\Car;
+use app\index\model\Repayment;
 use app\index\model\User as UsersModel;
 use Qiniu\Auth;
 use Qiniu\Storage\UploadManager;
@@ -445,6 +446,15 @@ class User extends Common
             $result['msg'] = $e;
         }
         return $result;
+    }
+
+    public function getRepayment(Request $request, Repayment $repayment)
+    {
+        $loa_uid = (int) $request->post('loa_uid',0);
+
+        $data = $repayment->where('loa_uid',$loa_uid)->select();
+
+        return json(['code'=>1,'data'=>$data]);
     }
 
 }
