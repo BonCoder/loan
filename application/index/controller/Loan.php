@@ -1,5 +1,6 @@
 <?php
 namespace app\index\controller;
+use app\index\model\Callback;
 use app\index\model\Loan  as LoanModel;
 use think\Controller;
 use think\Db;
@@ -313,5 +314,16 @@ class Loan extends Common
         return $result>0 ? 1 : 0 ;
     }
 
+    //修改下次还款日日期
+    public function editNextTime(Request $request, Callback $callback)
+    {
+        $id = $request->post('id');
+        $field = $request->post('field');
+        $value = $request->post('value');
+
+        $callback->where('id',$id)->setField($field,$value);
+
+        return json(['code'=>1]);
+    }
 
 }

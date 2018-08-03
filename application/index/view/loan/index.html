@@ -45,7 +45,7 @@
                 {field: 'plate', title: '车牌号', width: 150},
                 {field: 'start_t', title: '开始还款日', width: 180},
                 {field: 'last_t', title: '上次还款日', width: 180},
-                {field: 'next_t', title: '下次还款日', width: 180},
+                {field: 'next_t', title: '下次还款日', width: 180, edit: 'text'},
                 {field: 'num', title: '进度',style:'background-color: #eee;', width: 240, toolbar: '#number'},
                 {width: 200, align: 'center', toolbar: '#action'}
             ]],
@@ -103,6 +103,21 @@
                 });
             }
         });
+
+        //监听单元格编辑
+        table.on('edit(list)', function(obj){
+            var value = obj.value //得到修改后的值
+                ,data = obj.data //得到所在行所有键值
+                ,field = obj.field; //得到字段
+            $.post("{:url('editNextTime')}",{id:data.id,field:field,value:value},function (data) {
+                if(data.code === 1){
+                    console.log('[姓名: '+ data.username +'] ' + '下次还款日' + ' 更改为：'+ value);
+                }else {
+                    console.log('修改失败！');
+                }
+            });
+        });
+
 
         $('#delAll').click(function(){
             layer.confirm('确认要删除选中信息吗？', {icon: 3}, function(index) {
