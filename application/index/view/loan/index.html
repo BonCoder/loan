@@ -109,9 +109,9 @@
             var value = obj.value //得到修改后的值
                 ,data = obj.data //得到所在行所有键值
                 ,field = obj.field; //得到字段
-            $.post("{:url('editNextTime')}",{id:data.id,field:field,value:value},function (data) {
-                if(data.code === 1){
-                    layer.msg('[ID: '+ data.id +'] ' + '下次还款日' + ' 更改为：'+ value,{time:1000,icon:1});
+            $.post("{:url('editNextTime')}",{id:data.id,field:field,value:value},function (res) {
+                if(res.code === 1){
+                    layer.msg('[用户名: '+ data.username +'] ' + '下次还款日' + ' 更改为：'+ value,{time:1000,icon:1});
                 }else {
                     layer.msg('修改失败！',{time:1000,icon:2});
                 }
