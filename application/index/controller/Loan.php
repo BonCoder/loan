@@ -314,14 +314,26 @@ class Loan extends Common
         return $result>0 ? 1 : 0 ;
     }
 
-    //修改下次还款日日期
-    public function editNextTime(Request $request, Callback $callback)
+    
+    public function editField(Request $request, Callback $callback)
     {
         $id = $request->post('id');
         $field = $request->post('field');
         $value = $request->post('value');
-
-        $callback->where('id',$id)->setField($field,$value);
+        switch ($field){
+            case 'next_t':
+                $callback->where('id',$id)->setField($field,$value);
+                break;
+            case 'old_num':
+                $old_num = $callback->where('id',$id)->value('old_num');
+                $callback->where('id',$id)->update([
+                    'old_num'=>$value,
+                    'new_num'=>Db::raw('new_num+'.$value-$old_num),
+                ]);
+                break;
+            default:
+                return json(['code'=>0]);
+        }
 
         return json(['code'=>1]);
     }

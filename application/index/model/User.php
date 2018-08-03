@@ -135,8 +135,8 @@ class User extends Model
 		  }
           $interest = db('loa_interest')->where('id',$data['interest'])->value('interest');
           $num = db('loa_periods')->where('id',$data['periods'])->value('number');
-          $money = (($data['total']*$interest)+$data['total'])/$num;  // ((总额*利率)+总额)/期数 = 每月应还款
-          $back['money'] = round($money,2);
+          $money = ((($interest/12*$num)*$data['total'])+$data['total'])/$num; // （（利率 / 12 × 期数）×总额 + 总额）/期数 = 每月应还款
+          $back['money'] = sprintf("%.3f",$money);;
           db('loa_callback')->insertGetId($back);
           return $uid;
       }
@@ -161,12 +161,12 @@ class User extends Model
         $id = db('loa_user')->where('id',$data['id'])->update($where);
         $interest = db('loa_interest')->where('id',$data['interest'])->value('interest');
         $num = db('loa_periods')->where('id',$data['periods'])->value('number');
-        $money = (($data['total']*$interest)+$data['total'])/$num;
+        $money = ((($interest/12*$num)*$data['total'])+$data['total'])/$num; // （（利率 / 12 × 期数）×总额 + 总额）/期数 = 每月应还款
+        $back['money'] = sprintf("%.3f",$money);;
         if(in_array('car_id',array_keys($data))){
 			  $back['car_id'] = $data['car_id'];
 		      db('loa_car')->where('id',$data['car_id'])->setField('status',1);  
 		}
-        $back['money'] = round($money,2);
         db('loa_callback')->where('loa_uid',$data['id'])->update($back);
         $img['yinghangka_1'] = $data['yinghangka_1'] ?? '';
         $img['yinghangka_2'] = $data['yinghangka_2'] ?? '';

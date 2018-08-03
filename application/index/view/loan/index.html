@@ -43,6 +43,7 @@
                 {field: 'mobile', title: '手机号', width: 125},
                 {field: 'money', title: '每期金额', width: 95},
                 {field: 'plate', title: '车牌号', width: 150},
+                {field: 'old_num', title: '已还款期数', width: 80, edit: 'text' ,style:'color: #1aa094;'},
                 {field: 'start_t', title: '开始还款日', width: 180},
                 {field: 'last_t', title: '上次还款日', width: 180},
                 {field: 'next_t', title: '下次还款日 (点击修改)', width: 180, edit: 'text' ,style:'color: #1aa094;'},
@@ -109,9 +110,9 @@
             var value = obj.value //得到修改后的值
                 ,data = obj.data //得到所在行所有键值
                 ,field = obj.field; //得到字段
-            $.post("{:url('editNextTime')}",{id:data.id,field:field,value:value},function (res) {
+            $.post("{:url('editField')}",{id:data.id,field:field,value:value},function (res) {
                 if(res.code === 1){
-                    layer.msg('[用户名: '+ data.username +'] ' + '下次还款日' + ' 更改为：'+ value,{time:1000,icon:1});
+                    layer.msg('[用户: '+ data.username +'] ' + '下次还款日' + ' 更改为：'+ value,{time:1000,icon:1});
                 }else {
                     layer.msg('修改失败！',{time:1000,icon:2});
                 }
