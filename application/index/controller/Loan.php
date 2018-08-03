@@ -342,7 +342,7 @@ class Loan extends Common
 
     public function remark()
     {
-        $this->assign('id',input('id'));
+        $this->assign('loa_uid',input('loa_uid'));
 
         return view('loan/remark');
     }
