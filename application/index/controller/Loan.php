@@ -314,7 +314,7 @@ class Loan extends Common
         return $result>0 ? 1 : 0 ;
     }
 
-    
+
     public function editField(Request $request, Callback $callback)
     {
         $id = $request->post('id');
@@ -327,8 +327,8 @@ class Loan extends Common
             case 'old_num':
                 $old_num = $callback->where('id',$id)->value('old_num');
                 $callback->where('id',$id)->update([
-                    'old_num'=>$value,
-                    'new_num'=>Db::raw('new_num+'.$value-$old_num),
+                    'old_num'=>(int) $value,
+                    'new_num'=>Db::raw('new_num+'.(int) $value-$old_num),
                 ]);
                 break;
             default:
