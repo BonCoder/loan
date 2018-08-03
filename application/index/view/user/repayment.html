@@ -1,0 +1,6 @@
+{include file="common/head"/}
+{foreach $pdf as $key=>$vo }
+<div>
+    <a href="{$vo.pdf_url}" class="layui-btn layui-btn-normal" target="_blank" style="margin-top: 10px;margin-left: 40px">{$vo.name}</a>
+</div>
+{/foreach}

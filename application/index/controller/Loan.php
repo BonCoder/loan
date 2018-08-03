@@ -352,7 +352,7 @@ class Loan extends Common
     public function repayment(Request $request, Repayment $repayment)
     {
         $loa_uid = $request->post('loa_uid',0);
-        $imgs = implode(',',$request->post('repayment/a'));
+        $imgs = json_encode($request->post('repayment/a'));
         $remark = $request->post('remark','');
 
         $repayment->loa_uid = $loa_uid;
