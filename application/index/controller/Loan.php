@@ -350,7 +350,7 @@ class Loan extends Common
     public function repayment(Request $request, Callback $callback)
     {
         $id = $request->post('id',0);
-        $repayment = implode(',',$request->post('repayment',''));
+        $repayment = implode(',',$request->post('repayment/a'));
         $remark = $request->post('remark','');
 
         $callback->where('id',$id)->update([
