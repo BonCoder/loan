@@ -326,7 +326,7 @@ class Loan extends Common
                 break;
             case 'old_num':
                 $data = $callback->where('id',$id)->find();
-                $diff = $data->new_num + ($value - $data->old_num);
+                $diff = $data->new_num + ($data->old_num - $value);
                 $callback->where('id',$id)->update([
                     'old_num'=>(int) $value,
                     'new_num'=>$diff,
