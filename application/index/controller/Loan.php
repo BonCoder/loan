@@ -326,9 +326,10 @@ class Loan extends Common
                 break;
             case 'old_num':
                 $old_num = $callback->where('id',$id)->value('old_num');
+                $diff = intval($value-$old_num);
                 $callback->where('id',$id)->update([
                     'old_num'=>(int) $value,
-                    'new_num'=>Db::raw('new_num+'.(int) $value-$old_num),
+                    'new_num'=>Db::raw('new_num+'.$diff),
                 ]);
                 break;
             default:
