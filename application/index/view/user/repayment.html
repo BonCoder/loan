@@ -1,6 +1,14 @@
 {include file="common/head"/}
-{foreach $pdf as $key=>$vo }
+{foreach $data as $key=>$vo }
 <div>
-    <a href="{$vo.pdf_url}" class="layui-btn layui-btn-normal" target="_blank" style="margin-top: 10px;margin-left: 40px">{$vo.name}</a>
+    <span>{$vo.created_at}</span>
+</div>
+<div>
+    {foreach $vo as $vv }
+        <img style="width:250px;height: 180px;" src="{$vv}">
+    {/foreach}
+</div>
+<div>
+    <p>{$vo.remark}</p>
 </div>
 {/foreach}
