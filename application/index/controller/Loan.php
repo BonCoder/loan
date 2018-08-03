@@ -358,8 +358,8 @@ class Loan extends Common
         $repayment->loa_uid = $loa_uid;
         $repayment->back_img = $imgs;
         $repayment->remark = $remark;
-        $repayment->created = Carbon::now();
-        $repayment->updated = Carbon::now();
+        $repayment->created_at = Carbon::now();
+        $repayment->updated_at = Carbon::now();
 
         if($repayment->save()){
             return json(['code'=>1,'msg'=>'上传成功']);
