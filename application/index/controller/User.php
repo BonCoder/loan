@@ -450,7 +450,7 @@ class User extends Common
 
     public function getRepayment(Request $request, Repayment $repayment)
     {
-        $loa_uid = (int) $request->post('loa_uid',0);
+        $loa_uid = (int) $request->get('loa_uid',0);
 
         $data = Repayment::where(['loa_uid'=>$loa_uid])->select();
         $data2 = [];
