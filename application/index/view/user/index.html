@@ -175,15 +175,12 @@
                 });
                 layer.full(info);
             }else if (obj.event === 'repayment'){
-                $.post("{:url('getRepayment')}",{loa_uid:data.id}, function (res) {
-                    if(res.code === 1){
-                        layer.open({
-                            type:1,
-                            content:res.data,
-                        });
-                    }
+                layer.open({
+                    type: 2,
+                    title: '查看PDF',
+                    content: "{:url('getRepayment')}?loa_uid="+data.id,
+                    area: ['850px', '600px']
                 });
-
             }
         });
 
