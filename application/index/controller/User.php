@@ -452,14 +452,13 @@ class User extends Common
     {
         $loa_uid = (int) $request->post('loa_uid',0);
 
-        $data = Repayment::all(['loa_uid'=>$loa_uid])->chunk(100,function ($repayments){
-            foreach($repayments as $key => $value){
-                if($key == 'back_img'){
-                    json_decode($value,true);
-                }
-            }
-        });
-        print_r($data);die;
+        $data = Repayment::where(['loa_uid'=>$loa_uid])->select();
+        $data2 = [];
+        foreach ($data as $value){
+            $value['back_img'] = json_decode($value['back_img'],true);
+            array_push($data2,$value);
+        }
+
         $this->assign('data',$data);
 
         return view('user/repayment');
