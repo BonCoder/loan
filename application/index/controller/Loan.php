@@ -325,11 +325,11 @@ class Loan extends Common
                 $callback->where('id',$id)->setField($field,$value);
                 break;
             case 'old_num':
-                $old_num = $callback->where('id',$id)->value('old_num');
-                $diff = intval($value-$old_num);
+                $data = $callback->where('id',$id)->find();
+                $diff = $data->new_num + ($value - $data->old_num);
                 $callback->where('id',$id)->update([
                     'old_num'=>(int) $value,
-                    'new_num'=>Db::raw('new_num+'.$diff),
+                    'new_num'=>$diff,
                 ]);
                 break;
             default:
