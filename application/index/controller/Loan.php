@@ -358,7 +358,7 @@ class Loan extends Common
             'remark'=>$remark
         ]);
 
-        return json(['code'=>1,'msg'=>'上传成功','url'=>'loan/index']);
+        return json(['code'=>1,'msg'=>'上传成功']);
     }
 
 }
