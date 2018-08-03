@@ -350,11 +350,11 @@ class Loan extends Common
     //上传还款凭证和备注
     public function repayment(Request $request, Repayment $repayment)
     {
-        $id = $request->post('id',0);
+        $loa_uid = $request->post('loa_uid',0);
         $imgs = implode(',',$request->post('repayment/a'));
         $remark = $request->post('remark','');
 
-        $repayment->back_id = $id;
+        $repayment->loa_uid = $loa_uid;
         $repayment->back_img = $imgs;
         $repayment->remark = $remark;
 
