@@ -339,4 +339,26 @@ class Loan extends Common
         return json(['code'=>1]);
     }
 
+    public function remark()
+    {
+        $this->assign('id',input('id'));
+
+        return view('loan/remark');
+    }
+
+    //上传还款凭证和备注
+    public function repayment(Request $request, Callback $callback)
+    {
+        $id = $request->post('id',0);
+        $repayment = implode(',',$request->post('repayment',''));
+        $remark = $request->post('remark','');
+
+        $callback->where('id',$id)->update([
+            'back_img'=>$repayment,
+            'remark'=>$remark
+        ]);
+
+        return json(['code'=>1,'msg'=>'上传成功','url'=>'loan/index']);
+    }
+
 }

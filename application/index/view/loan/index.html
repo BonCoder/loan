@@ -94,8 +94,13 @@
                     $.post("{:url('confirm')}",{id:data.loa_uid},function(res){
                         layer.close(loading);
                         if(res.code===1){
-                            layer.msg(res.msg,{time:1000,icon:1});
-                            tableIn.reload();
+                            layer.open({
+                                type: 2,
+                                title: '提交还款凭证',
+                                content: "{:url('remark')}?id="+data.id,
+                                area: ['850px', '600px'],
+                                maxmin: true
+                            });
                         }else{
                             layer.msg('操作失败！',{time:1000,icon:2});
                         }
@@ -131,7 +136,7 @@
                 var loading = layer.load(1, {shade: [0.1, '#fff']});
                 $.post("{:url('deleteAll')}", {ids: ids}, function (data) {
                     layer.close(loading);
-                    if (data.code === 1) {
+                    if (data.code === 1) {  12
                         layer.msg(data.msg, {time: 1000, icon: 1});
                         tableIn.reload();
                     } else {
