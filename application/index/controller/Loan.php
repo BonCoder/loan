@@ -2,6 +2,7 @@
 namespace app\index\controller;
 use app\index\model\Callback;
 use app\index\model\Loan  as LoanModel;
+use app\index\model\Repayment;
 use think\Controller;
 use think\Db;
 use think\Request;
@@ -347,18 +348,21 @@ class Loan extends Common
     }
 
     //上传还款凭证和备注
-    public function repayment(Request $request, Callback $callback)
+    public function repayment(Request $request, Repayment $repayment)
     {
         $id = $request->post('id',0);
-        $repayment = implode(',',$request->post('repayment/a'));
+        $imgs = implode(',',$request->post('repayment/a'));
         $remark = $request->post('remark','');
 
-        $callback->where('id',$id)->update([
-            'back_img'=>$repayment,
-            'remark'=>$remark
-        ]);
+        $repayment->back_id = $id;
+        $repayment->back_img = $imgs;
+        $repayment->remark = $remark;
 
-        return json(['code'=>1,'msg'=>'上传成功']);
+        if($repayment->save()){
+            return json(['code'=>1,'msg'=>'上传成功']);
+        }
+
+        return json(['code'=>0,'msg'=>'上传失败']);
     }
 
 }

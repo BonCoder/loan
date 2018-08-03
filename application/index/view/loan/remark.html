@@ -49,10 +49,9 @@
                 <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
             </div>
         </div>
-        <input type="hidden" name="id" value="$id">
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <input type="hidden" id="loa_id" value="{$id}">
+                <input type="hidden" name="id" value="{$id}">
                 <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">提交</button>
                 <a href="{:url('index')}" class="layui-btn layui-btn-primary">返回</a>
             </div>
